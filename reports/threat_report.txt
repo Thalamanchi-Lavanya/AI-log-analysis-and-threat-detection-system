@@ -1,0 +1,15 @@
+THREAT DETECTION REPORT
+=======================
+
+User: user2
+Attack Type: Potential Brute Force Attack
+Risk Level: HIGH
+-------------------------
+User: user3
+Attack Type: Potential Brute Force Attack
+Risk Level: HIGH
+-------------------------
+User: admin
+Attack Type: Potential Brute Force Attack
+Risk Level: HIGH
+-------------------------
