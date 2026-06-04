@@ -255,12 +255,19 @@ Threat Classification
 # 🌟 Why This Project is Impressive
 
 ✅ Real-world cybersecurity use case
+
 ✅ Strong Python backend development
+
 ✅ AI + Machine Learning integration
+
 ✅ Database management
+
 ✅ Data visualization skills
+
 ✅ REST API concepts
+
 ✅ Scalable architecture
+
 ✅ Recruiter-friendly project
 
 ---
@@ -325,6 +332,7 @@ If you like this project:
 **THALAMANCHI LAVANYA**
 
 📧 [thalamanchilavanya@egmail.com]
+
 🌐 GitHub: https://github.com/Thalamanchi-Lavanya
 
 ---
