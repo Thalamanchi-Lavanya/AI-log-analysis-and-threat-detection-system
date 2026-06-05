@@ -1,23 +1,63 @@
 from flask import Flask, render_template, request, redirect, send_file
 from analyzer.threat_detector import analyze_log
 from pdf_generator import generate_pdf
+
 import os
 import sqlite3
 import requests
 
+
+# Create folders automatically
+
+os.makedirs("database", exist_ok=True)
+os.makedirs("logs", exist_ok=True)
+os.makedirs("reports", exist_ok=True)
+
+
+# Flask App
+
 app = Flask(__name__)
 
+
+# Create database automatically
+
+connection = sqlite3.connect("database/threats.db")
+
+cursor = connection.cursor()
+
+cursor.execute(
+    """
+    CREATE TABLE IF NOT EXISTS threats(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        attack_type TEXT,
+        risk_level TEXT
+    )
+    """
+)
+
+connection.commit()
+connection.close()
+
+
+# Upload folder
+
 UPLOAD_FOLDER = "logs"
+
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+
+# Dashboard Route
 
 @app.route("/")
 def dashboard():
 
     connection = sqlite3.connect("database/threats.db")
+
     cursor = connection.cursor()
 
     cursor.execute("SELECT * FROM threats")
+
     threats = cursor.fetchall()
 
     user_count = {}
@@ -27,18 +67,26 @@ def dashboard():
         username = threat[1]
 
         if username in user_count:
+
             user_count[username] += 1
+
         else:
+
             user_count[username] = 1
 
     if user_count:
+
         top_user = max(
             user_count,
             key=user_count.get
         )
+
         top_user_count = user_count[top_user]
+
     else:
+
         top_user = "None"
+
         top_user_count = 0
 
     total_threats = len(threats)
@@ -59,14 +107,19 @@ def dashboard():
     )
 
     alert_message = "System Secure"
+
     alert_class = "alert-low"
 
     if high_risk >= 1:
+
         alert_message = "HIGH RISK THREAT DETECTED"
+
         alert_class = "alert-high"
 
     elif medium_risk >= 1:
+
         alert_message = "MEDIUM RISK ACTIVITY DETECTED"
+
         alert_class = "alert-medium"
 
     try:
@@ -99,15 +152,19 @@ def dashboard():
     )
 
 
+# Upload Route
+
 @app.route("/upload", methods=["POST"])
 def upload_file():
 
     if "logfile" not in request.files:
+
         return redirect("/")
 
     file = request.files["logfile"]
 
     if file.filename == "":
+
         return redirect("/")
 
     filepath = os.path.join(
@@ -122,6 +179,8 @@ def upload_file():
     return redirect("/")
 
 
+# Download TXT Report
+
 @app.route("/download-report")
 def download_report():
 
@@ -132,6 +191,8 @@ def download_report():
         as_attachment=True
     )
 
+
+# Download PDF Report
 
 @app.route("/download-pdf")
 def download_pdf():
@@ -144,6 +205,11 @@ def download_pdf():
     )
 
 
+# Run Flask App
+
 if __name__ == "__main__":
-    if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+
+    app.run(
+        host="0.0.0.0",
+        port=5000
+    )
