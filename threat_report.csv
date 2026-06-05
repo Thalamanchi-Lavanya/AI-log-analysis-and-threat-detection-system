@@ -1,0 +1,7 @@
+id,username,attack_type,risk_level
+1,user3,Potential Brute Force Attack,HIGH
+2,admin,Potential Brute Force Attack,HIGH
+3,hacker,Potential Brute Force Attack,HIGH
+4,hacker,Account Lockout Attempt,HIGH
+5,hacker,Account Lockout Attempt,HIGH
+6,hacker,Account Lockout Attempt,HIGH

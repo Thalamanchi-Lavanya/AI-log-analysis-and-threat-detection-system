@@ -1,9 +1,4 @@
- __pycache__/
+__pycache__/
 *.pyc
 venv/
-database/*.db
-logs/*.log
-*.csv
-*.xlsx
-reports/*.pdf
 .env
