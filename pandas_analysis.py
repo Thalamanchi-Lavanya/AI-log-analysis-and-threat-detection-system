@@ -1,49 +1,93 @@
 import pandas as pd
 import sqlite3
 
-connection = sqlite3.connect(
-    "database/threats.db"
-)
 
-df = pd.read_sql_query(
-    "SELECT * FROM threats",
-    connection
-)
+def generate_analysis():
 
-print(df)
+    connection = sqlite3.connect(
+        "database/threats.db"
+    )
 
-print(
-    "\nTotal Threats:",
-    len(df)
-)
+    query = "SELECT * FROM threats"
 
-print("\nRisk Analysis\n")
+    df = pd.read_sql_query(
+        query,
+        connection
+    )
 
-print(
-    df["risk_level"].value_counts()
-)
+    connection.close()
 
-print("\nTop Attacked Users\n")
+    return df
 
-print(
-    df["username"].value_counts()
-)
 
-df.to_csv(
-    "threat_report.csv",
-    index=False
-)
-df.to_excel(
-    "threat_report.xlsx",
-    index=False
-)
+def get_total_threats():
 
-print(
-    "Excel Report Generated Successfully!"
-)
+    df = generate_analysis()
 
-print(
-    "\nCSV Report Generated Successfully!"
-)
+    return len(df)
 
-connection.close()
+
+def get_risk_analysis():
+
+    df = generate_analysis()
+
+    return df["risk_level"].value_counts()
+
+
+def get_top_users():
+
+    df = generate_analysis()
+
+    return df["username"].value_counts()
+
+
+def export_csv():
+
+    df = generate_analysis()
+
+    df.to_csv(
+        "threat_report.csv",
+        index=False
+    )
+
+    print(
+        "CSV Report Generated Successfully!"
+    )
+
+
+def export_excel():
+
+    df = generate_analysis()
+
+    df.to_excel(
+        "threat_report.xlsx",
+        index=False
+    )
+
+    print(
+        "Excel Report Generated Successfully!"
+    )
+
+
+if __name__ == "__main__":
+
+    print("\nThreat Data\n")
+
+    print(generate_analysis())
+
+    print(
+        "\nTotal Threats:",
+        get_total_threats()
+    )
+
+    print("\nRisk Analysis\n")
+
+    print(get_risk_analysis())
+
+    print("\nTop Attacked Users\n")
+
+    print(get_top_users())
+
+    export_csv()
+
+    export_excel()

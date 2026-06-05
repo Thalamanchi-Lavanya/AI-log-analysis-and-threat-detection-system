@@ -5,3 +5,4 @@ id,username,attack_type,risk_level
 4,hacker,Account Lockout Attempt,HIGH
 5,hacker,Account Lockout Attempt,HIGH
 6,hacker,Account Lockout Attempt,HIGH
+7,hacker,Potential Brute Force Attack,MEDIUM
